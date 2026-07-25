@@ -29,3 +29,35 @@ git clone https://github.com/yourusername/PanLoader.git
 cd PanLoader
 ./gradlew build
 ./gradlew test
+```
+### 📝 Coding Standards
+Follow the Google Java Style Guide.
+
+All public APIs must have JavaDoc comments.
+
+Ensure all tests pass before submitting.
+
+### 🔀 Submitting a Pull Request
+Fork the repository.
+
+Create your feature branch (git checkout -b feature/amazing-feature).
+
+Commit your changes (git commit -m 'Add some amazing feature').
+
+Push to the branch (git push origin feature/amazing-feature).
+
+Open a Pull Request.
+
+PR Requirements
+PR title should clearly describe the change.
+
+All CI checks must pass.
+
+At least one maintainer review is required.
+
+### 📧 Contact
+If you have any questions, you can reach us via:
+
+GitHub Issues
+
+Email: [project-email@example.com]
