@@ -60,4 +60,4 @@ If you have any questions, you can reach us via:
 
 GitHub Issues
 
-Email: [project-email@example.com]
+Email: [admin@creature.ro]
