@@ -20,12 +20,10 @@
 
 ## 🏗️ Architecture Overview
 PanLoader
-├── Master Dispatcher → Parses launch args and coordinates loading
-├── Mod Detector → Scans and identifies mod types
-├── Environment Factory → Creates isolated Forge/Fabric environments
-└── Containers → Forge container / Fabric container load independently
-
-text
+├── Master Dispatcher → Parses launch args and coordinates loading                                                                                          
+├── Mod Detector → Scans and identifies mod types                                                                                                           
+├── Environment Factory → Creates isolated Forge/Fabric environments                                                                                        
+└── Containers → Forge container / Fabric container load independently                                                                                      
 
 ## 🚀 Quick Start
 
