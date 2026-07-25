@@ -1,0 +1,18 @@
+# Global default owners
+* @mctlc2333
+
+# Core module
+/src/main/java/com/panloader/core/ @mctlc2333
+
+# Mod Detector
+/src/main/java/com/panloader/detector/ @mctlc2333
+
+# Environment Factory
+/src/main/java/com/panloader/environment/ @mctlc2333
+
+# Tests
+/src/test/ @mctlc2333
+
+# Documentation
+/docs/ @mctlc2333
+*.md @mctlc2333
