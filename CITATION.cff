@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use PanLoader in your research, please cite it as follows."
+title: "PanLoader: A Minecraft mod loader natively supporting Forge and Fabric"
+authors:
+  - family-names: "YourFamilyName"
+    given-names: "YourGivenName"
+    orcid: "https://orcid.org/your-orcid"
+date-released: 2026-07-25
+version: 0.1.0
+repository-code: "https://github.com/yourusername/PanLoader"
+url: "https://github.com/yourusername/PanLoader"
+license: "MIT"
+keywords:
+  - minecraft
+  - mod-loader
+  - forge
+  - fabric
+  - java
