@@ -46,13 +46,13 @@ text
 java -jar PanLoader.jar --gameDir D:/Minecraft/.minecraft --version 1.20.1
 ```
 
-##🤝 Contributing
+###🤝 Contributing
 We welcome all contributions! Please read CONTRIBUTING.md to learn how to get involved.
 
-##📜 License
+###📜 License
 This project is licensed under the MIT License.
 
-##🙏 Acknowledgements
+###🙏 Acknowledgements
 Fabric Loader – Launch core reference
 
 ModLauncher – Bytecode transformation reference
