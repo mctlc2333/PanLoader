@@ -8,7 +8,7 @@ We take the security of PanLoader seriously. If you discover a security vulnerab
 
 Please contact us privately:
 
-- 📧 Email: [security@yourdomain.com]
+- 📧 Email: [admin@creature.ro]
 - 🔐 If needed, you may encrypt your message using our [PGP key].
 
 ### Reporting Process
