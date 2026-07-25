@@ -44,7 +44,7 @@ text
 
 ```bash
 java -jar PanLoader.jar --gameDir D:/Minecraft/.minecraft --version 1.20.1
-
+```
 
 ##🤝 Contributing
 We welcome all contributions! Please read CONTRIBUTING.md to learn how to get involved.
