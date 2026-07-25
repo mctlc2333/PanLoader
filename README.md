@@ -19,7 +19,7 @@
 - 📦 **No bridges required** – Native support without extra compatibility layers
 
 ## 🏗️ Architecture Overview
-PanLoader
+PanLoader                                                                                                                                                   
 ├── Master Dispatcher → Parses launch args and coordinates loading                                                                                          
 ├── Mod Detector → Scans and identifies mod types                                                                                                           
 ├── Environment Factory → Creates isolated Forge/Fabric environments                                                                                        
