@@ -268,7 +268,7 @@
             font-size: 0.95rem;
         }
 
-        /* ===== 架构 ===== */
+        /* ===== ⭐ 响应式架构图 ===== */
         .architecture {
             background: #ffffff;
             padding: 60px 0;
@@ -276,29 +276,201 @@
             border-bottom: 1px solid #e9edf4;
         }
 
-        .arch-diagram {
+        .arch-responsive {
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-family: "SF Mono", "Fira Code", monospace;
-            font-size: 0.9rem;
-            background: #f8faff;
-            padding: 32px 24px;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-            max-width: 700px;
+            max-width: 820px;
             margin: 0 auto;
-            white-space: pre-wrap;
-            text-align: center;
-            line-height: 1.8;
+            padding: 28px 20px;
+            background: #f8faff;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
         }
 
-        .arch-diagram .highlight-box {
-            display: inline-block;
+        /* ---- 每个节点 ---- */
+        .arch-node {
+            background: white;
+            border-radius: 16px;
+            padding: 18px 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            min-width: 160px;
+            transition: all 0.2s ease;
+        }
+
+        .arch-node .arch-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1e293b;
+        }
+
+        .arch-node .arch-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* 总调度器 (第一层) */
+        .arch-node.dispatcher {
             background: #dbeafe;
-            padding: 2px 12px;
-            border-radius: 12px;
-            font-weight: 600;
+            border-color: #93c5fd;
+        }
+        .arch-node.dispatcher .arch-label {
+            color: #1e40af;
+        }
+
+        /* 模组探测器 + 环境工厂 (第二层) */
+        .arch-node.detector {
+            border-color: #bfdbfe;
+        }
+        .arch-node.factory {
+            border-color: #bfdbfe;
+        }
+
+        /* Forge / Fabric 容器 (第三层) */
+        .arch-node.container {
+            background: #f1f5f9;
+            min-width: 140px;
+        }
+        .arch-node.container.forge {
+            border-color: #fca5a5;
+        }
+        .arch-node.container.forge .arch-label {
+            color: #b91c1c;
+        }
+        .arch-node.container.fabric {
+            border-color: #86efac;
+        }
+        .arch-node.container.fabric .arch-label {
+            color: #15803d;
+        }
+
+        /* ---- 行布局 ---- */
+        .arch-row {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        /* ---- 连线装饰 ---- */
+        .arch-line {
+            height: 28px;
+            width: 2px;
+            background: #94a3b8;
+            margin: 2px 0;
+            position: relative;
+        }
+
+        .arch-line.split {
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .arch-line.split .line-left,
+        .arch-line.split .line-right {
+            width: 2px;
+            height: 28px;
+            background: #94a3b8;
+            display: block;
+        }
+
+        /* ---- 响应式：大屏幕 (≥769px) ---- */
+        @media (min-width: 769px) {
+            .arch-row {
+                gap: 60px;
+            }
+            .arch-line.split {
+                gap: 60px;
+            }
+            .arch-node {
+                padding: 18px 32px;
+                min-width: 180px;
+            }
+            .arch-node.container {
+                min-width: 160px;
+            }
+        }
+
+        /* ---- 响应式：平板 (≤768px) ---- */
+        @media (max-width: 768px) {
+            .arch-row {
+                gap: 24px;
+            }
+            .arch-line.split {
+                gap: 24px;
+            }
+            .arch-node {
+                padding: 14px 20px;
+                min-width: 120px;
+            }
+            .arch-node .arch-label {
+                font-size: 1rem;
+            }
+            .arch-node.container {
+                min-width: 110px;
+            }
+            .arch-node .arch-desc {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ---- 响应式：手机 (≤480px) ---- */
+        @media (max-width: 480px) {
+            .arch-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .arch-line {
+                display: none;   /* 隐藏连线，简化视觉 */
+            }
+            .arch-line.split {
+                display: none;
+            }
+            .arch-node {
+                width: 100%;
+                max-width: 300px;
+                padding: 14px 16px;
+                min-width: unset;
+            }
+            .arch-node .arch-label {
+                font-size: 1rem;
+            }
+            .arch-node .arch-desc {
+                font-size: 0.8rem;
+            }
+            .arch-node.container {
+                min-width: unset;
+            }
+            /* 手机端第二层两个节点上下排列，但保留独立边框 */
+            .arch-row .arch-node.detector {
+                margin-bottom: 0;
+            }
+            .arch-row .arch-node.factory {
+                margin-top: 0;
+            }
+        }
+
+        /* ---- 响应式：极小屏 (≤360px) ---- */
+        @media (max-width: 360px) {
+            .arch-node {
+                padding: 10px 12px;
+                max-width: 240px;
+            }
+            .arch-node .arch-label {
+                font-size: 0.9rem;
+            }
+            .arch-node .arch-desc {
+                font-size: 0.7rem;
+            }
         }
 
         /* ===== 快速开始 ===== */
@@ -383,7 +555,7 @@
             font-size: 0.85rem;
         }
 
-        /* ===== 响应式 ===== */
+        /* ===== 全局响应式微调 ===== */
         @media (max-width: 640px) {
             .navbar .container {
                 flex-direction: column;
@@ -403,10 +575,6 @@
             .card {
                 padding: 24px 16px;
             }
-            .arch-diagram {
-                font-size: 0.75rem;
-                padding: 20px 12px;
-            }
             .code-block {
                 font-size: 0.75rem;
                 padding: 16px;
@@ -414,6 +582,9 @@
             .lang-switcher button {
                 font-size: 0.75rem;
                 padding: 2px 10px;
+            }
+            .section-title {
+                font-size: 1.6rem;
             }
         }
     </style>
@@ -434,7 +605,6 @@
             <a href="#download" data-i18n="nav-download">下载</a>
             <a href="https://github.com/mctlc2333/PanLoader" target="_blank" class="btn-ghost" data-i18n="nav-github">GitHub</a>
             <a href="https://github.com/mctlc2333/PanLoader/wiki" target="_blank" class="btn-ghost" data-i18n="nav-wiki">Wiki</a>
-            <!-- 语言切换 -->
             <div class="lang-switcher">
                 <button class="active" data-lang="zh">中文</button>
                 <button data-lang="en">English</button>
@@ -457,12 +627,12 @@
         </p>
         <div class="badges">
             <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
-            <img src="https://img.shields.io/github/v/release/yourusername/PanLoader" alt="Release" />
-            <img src="https://img.shields.io/github/issues/yourusername/PanLoader" alt="Issues" />
+            <img src="https://img.shields.io/github/v/release/mctlc2333/PanLoader" alt="Release" />
+            <img src="https://img.shields.io/github/issues/mctlc2333/PanLoader" alt="Issues" />
         </div>
         <div class="btns">
             <a href="#download" class="btn btn-primary" data-i18n="hero-btn-download">📦 立即下载</a>
-            <a href="https://github.com/yourusername/PanLoader" target="_blank" class="btn btn-secondary" data-i18n="hero-btn-source">💻 查看源码</a>
+            <a href="https://github.com/mctlc2333/PanLoader" target="_blank" class="btn btn-secondary" data-i18n="hero-btn-source">💻 查看源码</a>
         </div>
     </div>
 </section>
@@ -507,31 +677,54 @@
     </div>
 </section>
 
-<!-- ===== 架构 ===== -->
+<!-- ===== ⭐ 响应式架构 ===== -->
 <section id="architecture" class="architecture">
     <div class="container">
         <h2 class="section-title" data-i18n="arch-title">🏛️ 架构概览</h2>
         <p class="section-sub" data-i18n="arch-sub">PanLoader 作为总调度中心，协调多个隔离的容器</p>
-        <div class="arch-diagram">
-            <div>┌─────────────────────────────────────┐</div>
-            <div>│      <span class="highlight-box" data-i18n="arch-dispatcher">PanLoader 总调度器</span>           │</div>
-            <div>│         <span data-i18n="arch-dispatcher-desc">解析参数 · 协调流程</span>            │</div>
-            <div>└─────────────┬───────────────────────┘</div>
-            <div>              │</div>
-            <div>  ┌───────────┴───────────┐</div>
-            <div>  ▼                       ▼</div>
-            <div>┌───────────────┐   ┌───────────────┐</div>
-            <div>│ <span data-i18n="arch-detector">模组探测器</span>    │   │ <span data-i18n="arch-factory">环境工厂</span>      │</div>
-            <div>│ <span data-i18n="arch-detector-desc">扫描 &amp; 分类</span>   │   │ <span data-i18n="arch-factory-desc">创建隔离容器</span>  │</div>
-            <div>└───────────────┘   └───────┬───────┘</div>
-            <div>                              │</div>
-            <div>              ┌───────────────┴───────────────┐</div>
-            <div>              ▼                               ▼</div>
-            <div>    ┌─────────────────┐             ┌─────────────────┐</div>
-            <div>    │  <span data-i18n="arch-forge">Forge 容器</span>     │             │  <span data-i18n="arch-fabric">Fabric 容器</span>   │</div>
-            <div>    │  <span data-i18n="arch-forge-desc">(独立 ClassLoader)</span> │         │  <span data-i18n="arch-fabric-desc">(独立 ClassLoader)</span> │</div>
-            <div>    │  <span data-i18n="arch-forge-mods">运行 Forge 模组</span> │             │  <span data-i18n="arch-fabric-mods">运行 Fabric 模组</span>│</div>
-            <div>    └─────────────────┘             └─────────────────┘</div>
+
+        <!-- 响应式架构图 -->
+        <div class="arch-responsive">
+            <!-- 第一层：总调度器 -->
+            <div class="arch-node dispatcher">
+                <div class="arch-label" data-i18n="arch-dispatcher">PanLoader 总调度器</div>
+                <div class="arch-desc" data-i18n="arch-dispatcher-desc">解析参数 · 协调流程</div>
+            </div>
+
+            <!-- 连线 1 -->
+            <div class="arch-line down"></div>
+
+            <!-- 第二层：探测器 & 工厂 -->
+            <div class="arch-row">
+                <div class="arch-node detector">
+                    <div class="arch-label" data-i18n="arch-detector">模组探测器</div>
+                    <div class="arch-desc" data-i18n="arch-detector-desc">扫描 &amp; 分类</div>
+                </div>
+                <div class="arch-node factory">
+                    <div class="arch-label" data-i18n="arch-factory">环境工厂</div>
+                    <div class="arch-desc" data-i18n="arch-factory-desc">创建隔离容器</div>
+                </div>
+            </div>
+
+            <!-- 连线 2 (分叉) -->
+            <div class="arch-line split">
+                <span class="line-left"></span>
+                <span class="line-right"></span>
+            </div>
+
+            <!-- 第三层：Forge & Fabric 容器 -->
+            <div class="arch-row">
+                <div class="arch-node container forge">
+                    <div class="arch-label" data-i18n="arch-forge">Forge 容器</div>
+                    <div class="arch-desc" data-i18n="arch-forge-desc">(独立 ClassLoader)</div>
+                    <div class="arch-desc" data-i18n="arch-forge-mods">运行 Forge 模组</div>
+                </div>
+                <div class="arch-node container fabric">
+                    <div class="arch-label" data-i18n="arch-fabric">Fabric 容器</div>
+                    <div class="arch-desc" data-i18n="arch-fabric-desc">(独立 ClassLoader)</div>
+                    <div class="arch-desc" data-i18n="arch-fabric-mods">运行 Fabric 模组</div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -545,7 +738,7 @@
             <span class="cmd">java -jar</span> PanLoader.jar <span class="string">--gameDir</span> /path/to/.minecraft <span class="string">--version</span> 1.20.1
         </div>
         <div style="text-align: center;">
-            <a href="https://github.com/yourusername/PanLoader/wiki/Installation" class="btn btn-secondary" data-i18n="quick-guide">📖 阅读完整安装指南</a>
+            <a href="https://github.com/mctlc2333/PanLoader/wiki/Installation" class="btn btn-secondary" data-i18n="quick-guide">📖 阅读完整安装指南</a>
         </div>
     </div>
 </section>
@@ -566,13 +759,12 @@
 <footer class="footer">
     <div class="container">
         <div class="socials">
-            <a href="https://github.com/yourusername/PanLoader" target="_blank">GitHub</a>
-            <a href="https://github.com/yourusername/PanLoader/issues" target="_blank" data-i18n="footer-issues">Issues</a>
-            <a href="https://github.com/yourusername/PanLoader/wiki" target="_blank" data-i18n="footer-wiki">Wiki</a>
-            <a href="https://discord.gg/your-invite" target="_blank" data-i18n="footer-discord">Discord</a>
+            <a href="https://github.com/mctlc2333/PanLoader" target="_blank">GitHub</a>
+            <a href="https://github.com/mctlc2333/PanLoader/issues" target="_blank" data-i18n="footer-issues">Issues</a>
+            <a href="https://github.com/mctlc2333/PanLoader/wiki" target="_blank" data-i18n="footer-wiki">Wiki</a>
         </div>
         <div class="copy" data-i18n="footer-copy">
-            &copy; 2026 PanLoader Team &middot; 基于 <a href="https://github.com/yourusername/PanLoader/blob/main/LICENSE" style="color:#94a3b8;">MIT 许可证</a> 开源
+            &copy; 2026 PanLoader Team &middot; 基于 <a href="https://github.com/mctlc2333/PanLoader/blob/main/LICENSE" style="color:#94a3b8;">MIT 许可证</a> 开源
         </div>
     </div>
 </footer>
@@ -583,20 +775,17 @@
         // ----- 多语言文本库 -----
         const i18n = {
             zh: {
-                // 导航
                 "nav-features": "特性",
                 "nav-architecture": "架构",
                 "nav-quickstart": "快速开始",
                 "nav-download": "下载",
                 "nav-github": "GitHub",
                 "nav-wiki": "Wiki",
-                // Hero
                 "hero-title-highlight": "盘子",
                 "hero-title": "· PanLoader",
                 "hero-desc": "原生支持 Forge 和 Fabric 模组的 Minecraft 加载器<br />让两大生态在同一游戏中和谐共存",
                 "hero-btn-download": "📦 立即下载",
                 "hero-btn-source": "💻 查看源码",
-                // 特性
                 "features-title": "✨ 核心特性",
                 "features-sub": "PanLoader 从底层重新定义了模组加载方式",
                 "feature1-title": "双模组支持",
@@ -611,7 +800,6 @@
                 "feature5-desc": "原生支持，不依赖 Sinytra Connector 等兼容层",
                 "feature6-title": "开源 & 社区",
                 "feature6-desc": "MIT 协议，欢迎任何人贡献代码或提出建议",
-                // 架构
                 "arch-title": "🏛️ 架构概览",
                 "arch-sub": "PanLoader 作为总调度中心，协调多个隔离的容器",
                 "arch-dispatcher": "PanLoader 总调度器",
@@ -626,20 +814,17 @@
                 "arch-fabric": "Fabric 容器",
                 "arch-fabric-desc": "(独立 ClassLoader)",
                 "arch-fabric-mods": "运行 Fabric 模组",
-                // 快速开始
                 "quick-title": "🚀 快速开始",
                 "quick-sub": "仅需一条命令，即可启动你的整合包",
                 "quick-guide": "📖 阅读完整安装指南",
-                // 下载
                 "download-title": "📦 下载 PanLoader",
                 "download-desc": "当前版本 v0.1.0 · 持续迭代中",
                 "download-btn": "⬇️ 前往 Releases 下载",
                 "download-source": "也欢迎通过源码编译：<code style=\"background: #0f172a; padding: 4px 12px; border-radius: 8px;\">./gradlew build</code>",
-                // 页脚
                 "footer-issues": "Issues",
                 "footer-wiki": "Wiki",
                 "footer-discord": "Discord",
-                "footer-copy": "&copy; 2026 PanLoader Team &middot; 基于 <a href=\"https://github.com/yourusername/PanLoader/blob/main/LICENSE\" style=\"color:#94a3b8;\">MIT 许可证</a> 开源"
+                "footer-copy": "&copy; 2026 PanLoader Team &middot; 基于 <a href=\"https://github.com/mctlc2333/PanLoader/blob/main/LICENSE\" style=\"color:#94a3b8;\">MIT 许可证</a> 开源"
             },
             en: {
                 "nav-features": "Features",
@@ -691,7 +876,7 @@
                 "footer-issues": "Issues",
                 "footer-wiki": "Wiki",
                 "footer-discord": "Discord",
-                "footer-copy": "&copy; 2026 PanLoader Team &middot; Open source under <a href=\"https://github.com/yourusername/PanLoader/blob/main/LICENSE\" style=\"color:#94a3b8;\">MIT License</a>"
+                "footer-copy": "&copy; 2026 PanLoader Team &middot; Open source under <a href=\"https://github.com/mctlc2333/PanLoader/blob/main/LICENSE\" style=\"color:#94a3b8;\">MIT License</a>"
             },
             de: {
                 "nav-features": "Funktionen",
@@ -743,7 +928,7 @@
                 "footer-issues": "Issues",
                 "footer-wiki": "Wiki",
                 "footer-discord": "Discord",
-                "footer-copy": "&copy; 2026 PanLoader Team &middot; Open Source unter <a href=\"https://github.com/yourusername/PanLoader/blob/main/LICENSE\" style=\"color:#94a3b8;\">MIT-Lizenz</a>"
+                "footer-copy": "&copy; 2026 PanLoader Team &middot; Open Source unter <a href=\"https://github.com/mctlc2333/PanLoader/blob/main/LICENSE\" style=\"color:#94a3b8;\">MIT-Lizenz</a>"
             }
         };
 
@@ -753,16 +938,13 @@
 
         // ----- 设置语言 -----
         function setLanguage(lang) {
-            // 更新按钮激活状态
             langButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
 
-            // 更新所有 data-i18n 内容
             elements.forEach(el => {
                 const key = el.dataset.i18n;
                 if (i18n[lang] && i18n[lang][key] !== undefined) {
-                    // 如果是 HTML 内容（包含标签），使用 innerHTML，否则 textContent
                     if (i18n[lang][key].includes('<') && i18n[lang][key].includes('>')) {
                         el.innerHTML = i18n[lang][key];
                     } else {
@@ -771,7 +953,6 @@
                 }
             });
 
-            // 更新 html 的 lang 属性
             document.documentElement.lang = lang;
         }
 
@@ -787,5 +968,6 @@
         setLanguage('zh');
     })();
 </script>
+
 </body>
 </html>
