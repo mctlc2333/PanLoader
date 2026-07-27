@@ -1,0 +1,4 @@
+rootProject.name = 'PanLoader'
+include ':test-mod'
+include ':test-fabric-mod'
+include ':test-forge-mod'

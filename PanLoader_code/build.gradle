@@ -1,0 +1,109 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.panloader'
+version = '0.3.0'
+
+def mcVersion = project.findProperty('mcVersion') ?: '1.20.1'
+def mcHome = project.findProperty('mcHome') ?: "${System.getProperty('user.home')}/.minecraft"
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+    maven {
+        name = 'SpongePowered'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+    maven {
+        name = 'ParchmentMC'
+        url = 'https://maven.parchmentmc.org/'
+    }
+    maven {
+        name = 'Forge'
+        url = 'https://maven.minecraftforge.net/'
+    }
+}
+
+def mcJar = file("${mcHome}/versions/${mcVersion}/${mcVersion}.jar")
+def mcIsDeobfuscated = false
+
+if (mcJar.exists()) {
+    try {
+        def jar = new java.util.jar.JarFile(mcJar)
+        mcIsDeobfuscated = jar.getJarEntry("net/minecraft/client/gui/screen/TitleScreen.class") != null
+        jar.close()
+    } catch (Exception ignored) {
+    }
+}
+
+configurations {
+    runtimeClasspath {
+        exclude group: 'org.apache.logging.log4j'
+        exclude group: 'org.slf4j'
+    }
+}
+
+dependencies {
+    implementation('net.fabricmc:fabric-loader:0.15.11') {
+        exclude group: 'org.apache.logging.log4j'
+        exclude group: 'org.slf4j'
+    }
+
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    if (mcJar.exists() && mcIsDeobfuscated) {
+        compileOnly files(mcJar)
+        println("[PanLoader] Added deobfuscated Minecraft ${mcVersion} as compileOnly: ${mcJar}")
+    } else if (mcJar.exists()) {
+        println("[PanLoader] Minecraft JAR found but is obfuscated (will not compile Mixin classes)")
+        println("[PanLoader] Use a deobfuscated Minecraft JAR to compile Mixin classes.")
+    } else {
+        println("[PanLoader] Minecraft JAR not found at ${mcJar}")
+        println("[PanLoader] Mixin classes targeting Minecraft will not compile.")
+        println("[PanLoader] Set -PmcHome=<path> and -PmcVersion=<version> to configure.")
+    }
+}
+
+application {
+    mainClass = 'com.panloader.PanLoaderBootstrap'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    if (!mcIsDeobfuscated) {
+        exclude '**/mixins/*.java'
+        println("[PanLoader] Excluding Mixin classes from compilation (no deobfuscated Minecraft JAR)")
+    }
+}
+
+jar {
+    archiveBaseName = 'PanLoader'
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/INDEX.LIST'
+    exclude 'META-INF/MANIFEST.MF'
+    exclude 'log4j2.xml'
+    exclude 'panloader.mixins.json'
+    manifest {
+        attributes(
+            'Main-Class': 'com.panloader.PanLoaderBootstrap',
+            'Premain-Class': 'com.panloader.PanLoaderBootstrap',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version
+        )
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
